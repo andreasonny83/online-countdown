@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const ListCountDowns = () => {
@@ -8,7 +8,7 @@ export const ListCountDowns = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios(`${process.env.API_URL}/list`);
+        const result = await axios(`${process.env.REACT_APP_API_URL}/list`);
         if (result && result.data) {
           setItems(result.data);
         }
@@ -43,7 +43,17 @@ export const ListCountDowns = () => {
     <div className="ListCountDowns">
       <ul>
         {items.map((item) => (
-          <li key={item.id}>item</li>
+          <li key={item.id}>
+            <p>{item.id}</p>
+            <p>{item.name}</p>
+            <p>
+              {item.day}/{item.month}/{item.year}
+            </p>
+            <p>
+              {item.hour}:{item.min}:{item.sec}
+            </p>
+            <p>{item.locale}</p>
+          </li>
         ))}
       </ul>
     </div>
