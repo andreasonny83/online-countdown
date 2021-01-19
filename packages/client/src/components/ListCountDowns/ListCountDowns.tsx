@@ -13,7 +13,7 @@ export const ListCountDowns = () => {
           setItems(result.data);
         }
       } catch (err) {
-        console.warn('error');
+        console.warn(err.message || err);
 
         setItems([]);
       }

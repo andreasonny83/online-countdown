@@ -1,22 +1,16 @@
 import { useCallback } from 'react';
 import { useState } from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import './SearchBar.css';
 
 interface State {
   address: string;
   errorMessage: string;
-  isGeocoding: boolean;
-  latitude?: number;
-  longitude?: number;
 }
 
 const initialState: State = {
   address: '',
   errorMessage: '',
-  isGeocoding: false,
-  latitude: undefined,
-  longitude: undefined,
 };
 
 export const SearchBar = () => {
@@ -28,8 +22,6 @@ export const SearchBar = () => {
         ...state,
         address,
         errorMessage: '',
-        latitude: undefined,
-        longitude: undefined,
       });
     },
     [state]
@@ -37,22 +29,7 @@ export const SearchBar = () => {
 
   const handleSelect = useCallback(
     async (selected: string) => {
-      setState({ ...state, isGeocoding: true, address: selected });
-
-      try {
-        const res = await geocodeByAddress(selected);
-        const { lat, lng } = await getLatLng(res[0]);
-
-        setState({
-          ...state,
-          latitude: lat,
-          longitude: lng,
-          isGeocoding: false,
-        });
-      } catch (error: any) {
-        setState({ ...state, isGeocoding: false });
-        console.log('error', error);
-      }
+      setState({ ...state, address: selected });
     },
     [state]
   );
@@ -61,8 +38,6 @@ export const SearchBar = () => {
     setState({
       ...state,
       address: '',
-      latitude: undefined,
-      longitude: undefined,
     });
   }, [state]);
 
@@ -99,7 +74,7 @@ export const SearchBar = () => {
                 </button>
               )}
             </div>
-            {suggestions.length > 0 && (
+            {Boolean(suggestions.length) && (
               <div className="autocomplete-container">
                 {suggestions.map((suggestion: any) => (
                   <div
@@ -117,30 +92,7 @@ export const SearchBar = () => {
           </div>
         )}
       </PlacesAutocomplete>
-      {state.errorMessage.length > 0 && <div className="error-message">{state.errorMessage}</div>}
-
-      {((state.latitude && state.longitude) || state.isGeocoding) && (
-        <div>
-          <h3 className="geocode-result-header">Geocode result</h3>
-          {state.isGeocoding ? (
-            <div>
-              LOADING
-              <i className="fa fa-spinner fa-pulse fa-3x fa-fw spinner" />
-            </div>
-          ) : (
-            <div>
-              <div className="geocode-result-item--lat">
-                <label>Latitude:</label>
-                <span>{state.latitude}</span>
-              </div>
-              <div className="geocode-result-item--lng">
-                <label>Longitude:</label>
-                <span>{state.longitude}</span>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      {Boolean(state.errorMessage.length) && <div className="error-message">No Results</div>}
     </div>
   );
 };

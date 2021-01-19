@@ -25,6 +25,7 @@
 .clear-button,
 .clear-button:active,
 .clear-button:focus {
+  cursor: pointer;
   position: absolute;
   right: 16px;
   top: 50%;
@@ -33,7 +34,6 @@
   border: none;
   outline: none;
   font-weight: 600;
-  color: #999;
 }
 
 .autocomplete-container {
@@ -41,19 +41,18 @@
   border-left: honeydew;
   border-right: honeydew;
   border-top: 1px solid #e6e6e6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 2px 2px;
 }
 
 .suggestion-item {
   padding: 8px;
   text-align: left;
-  background-color: #fff;
   cursor: pointer;
 }
 
 .suggestion-item--active {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .error-message {

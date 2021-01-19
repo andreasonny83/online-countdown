@@ -1,15 +1,11 @@
 import React from 'react';
-import { ListCountDowns } from './components/ListCountDowns';
-import { SearchBar } from './components/SearchBar';
-import './App.css';
 
-function App() {
+import { Routes } from './Routes';
+
+export const App = () => {
   return (
     <div className="App">
-      <SearchBar />
-      <ListCountDowns />
+      <Routes />
     </div>
   );
-}
-
-export default App;
+};
